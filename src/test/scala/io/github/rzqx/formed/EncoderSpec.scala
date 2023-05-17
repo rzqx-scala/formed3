@@ -8,7 +8,7 @@ import cats.effect.IO
 
 import weaver.SimpleIOSuite
 
-object EncoderSpec extends SimpleIOSuite {
+object EncoderSpec extends SimpleIOSuite:
   test("Should encode basic") {
     final case class C(a: String, b: Int)
     val instance = C("a", 1)
@@ -65,4 +65,3 @@ object EncoderSpec extends SimpleIOSuite {
       }
     }
   }
-}

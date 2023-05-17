@@ -6,10 +6,11 @@ import cats.*
 import cats.data.Chain
 import cats.implicits.*
 
-import java.util.UUID
 import scala.deriving.Mirror
 
-trait EncoderInstances {
+import java.util.UUID
+
+trait EncoderInstances:
   implicit val encodeString: FormEncoder[String] = (v: String) => Chain(Chain.empty -> v)
   implicit val encodeUnit: FormEncoder[Unit] = (_: Unit) => Chain.empty
   implicit val encodeBoolean: FormEncoder[Boolean] = encodeString.contramap(_.toString)
@@ -28,15 +29,13 @@ trait EncoderInstances {
   implicit def encodeValue[T](implicit ev: ValueOf[T]): FormEncoder[T] =
     (_: T) => Chain(Chain.empty -> ev.value.toString)
 
-  implicit def encodeTraverse[F[_]: Traverse, T](implicit ev: FormEncoder[T]): FormEncoder[F[T]] = (value: F[T]) => {
+  implicit def encodeTraverse[F[_]: Traverse, T](implicit ev: FormEncoder[T]): FormEncoder[F[T]] = (value: F[T]) =>
     Traverse[F].zipWithIndex(value).foldMap { case (v, i) =>
       ev.chained(v).map { case (prefix, v) =>
         prefix.prepend(i.toString) -> v
       }
     }
-  }
 
-  implicit inline def encodeProduct[T: Mirror.Of]: FormEncoder[T] = FormEncoder.derive[T]
-}
+  implicit inline def encodeProduct[T: Mirror.ProductOf]: FormEncoder[T] = FormEncoder.derived[T]
 
 object EncoderInstances extends EncoderInstances

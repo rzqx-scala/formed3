@@ -1,5 +1,5 @@
 val CatsVersion = "2.9.0"
-val CatsEffectVersion = "3.4.9"
+val CatsEffectVersion = "3.5.0"
 val CatsEffectTestKitVersion = "3.4.7"
 val WeaverCatsVersion = "0.8.3"
 val Http4sVersion = "0.23.18"
@@ -11,10 +11,6 @@ ThisBuild / scalaVersion := Scala3
 
 ThisBuild / organization := "io.github.rzqx"
 ThisBuild / organizationName := "rzqx-scala"
-
-ThisBuild / semanticdbEnabled := true
-ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
-ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
 
 ThisBuild / licenses := Seq("APL2" -> url("https://www.apache.org/licenses/LICENSE-2.0.txt"))
 ThisBuild / homepage := Some(url("https://github.com/rzqx-scala/formed3"))

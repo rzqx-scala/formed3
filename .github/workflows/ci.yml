@@ -18,8 +18,6 @@ jobs:
           java-version: 17
           cache: sbt
       - name: Code style
-        run: sbt scalafmtCheck
-      - name: Linting
-        run: sbt "scalafixAll --check"
+        run: sbt scalafmtCheckAll
       - name: Tests
         run: sbt +test

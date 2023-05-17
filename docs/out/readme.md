@@ -65,7 +65,7 @@ import scala.concurrent.duration.*
 
 implicit val durationEncoder: FormEncoder[Duration] =
   FormEncoder[String].contramap(_.toSeconds.toString)
-// durationEncoder: FormEncoder[Duration] = io.github.rzqx.formed.FormEncoder$$anon$1$$Lambda$18251/0x0000000802f5a158@6201c4f
+// durationEncoder: FormEncoder[Duration] = io.github.rzqx.formed.FormEncoder$$anon$1$$Lambda$11087/0x0000000802c14e80@1d873435
   
 final case class Foo(duration: Duration)
 
