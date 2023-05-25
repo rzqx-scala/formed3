@@ -10,7 +10,7 @@ import weaver.SimpleIOSuite
 
 object EncoderSpec extends SimpleIOSuite:
   test("Should encode basic") {
-    final case class C(a: String, b: Int)
+    case class C(a: String, b: Int)
     val instance = C("a", 1)
 
     IO {
@@ -21,8 +21,8 @@ object EncoderSpec extends SimpleIOSuite:
   }
 
   test("Should encode nested") {
-    final case class Inner(v: String)
-    final case class C(a: String, b: Inner)
+    case class Inner(v: String)
+    case class C(a: String, b: Inner)
     val instance = C("a", Inner("b"))
 
     IO {
@@ -32,9 +32,9 @@ object EncoderSpec extends SimpleIOSuite:
     }
   }
 
-  test("Should encode nested traversable") {
-    final case class Inner(v: String)
-    final case class C(a: String, b: List[Inner])
+  test("Should encode nested list") {
+    case class Inner(v: String)
+    case class C(a: String, b: List[Inner])
     val instance = C("a", List(Inner("b"), Inner("c")))
 
     IO {
@@ -45,7 +45,7 @@ object EncoderSpec extends SimpleIOSuite:
   }
 
   test("Should encode list") {
-    final case class C(a: List[Int])
+    case class C(a: List[Int])
     val instance = C(List(1, 2, 3))
 
     IO {
@@ -56,12 +56,23 @@ object EncoderSpec extends SimpleIOSuite:
   }
 
   test("Should encode literal") {
-    final case class C(a: 1, b: "hello")
+    case class C(a: 1, b: "hello")
     val instance = C(1, "hello")
 
     IO {
       expect {
         instance.asFormData == Chain(("a", "1"), ("b", "hello"))
+      }
+    }
+  }
+
+  test("Should encode option") {
+    case class C(a: Option[Int])
+    val instance = C(Option(1))
+
+    IO {
+      expect {
+        instance.asFormData == Chain(("a", "1"))
       }
     }
   }
